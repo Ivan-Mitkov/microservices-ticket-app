@@ -23,6 +23,7 @@ metadata:
 spec:
   selector:
     app: auth
+  type: ClusterIP  
   ports:
     - name: auth
       protocol: TCP
