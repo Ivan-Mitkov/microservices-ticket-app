@@ -36,7 +36,11 @@ router.post(
     const user = User.build({ email, password });
     await user.save();
     //generate jwt
-    const userJwt = jwt.sign({ id: user.id, email: user.email }, "dsds");
+    const userJwt = jwt.sign(
+      { id: user.id, email: user.email },
+      //chek in index.ts
+      process.env.jwt!
+    );
     //store on session object
     //jwt is possibly null so redefine the object <TS>
     // req.session.jwt=userJwt

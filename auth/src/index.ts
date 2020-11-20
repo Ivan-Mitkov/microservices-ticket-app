@@ -30,6 +30,10 @@ app.all("*", async () => {
 app.use(errorHandler);
 
 const start = async () => {
+  //check if env variable is defined
+  if (!process.env.jwt) {
+    throw new Error("ENV Variable Not Found");
+  }
   //connect to ClusterIp service
   // name: auth-mongo-srv
   // ports:
