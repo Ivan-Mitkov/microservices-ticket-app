@@ -30,8 +30,7 @@ router.post(
     if (existingUser) {
       throw new BadRequestError("User already exists");
     }
-    //@TODO password hashing
-
+    // password hashing in Model
     //create user
     const user = User.build({ email, password });
     await user.save();
