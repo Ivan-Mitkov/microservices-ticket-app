@@ -1,10 +1,28 @@
-import express from 'express'
-const router=express.Router();
+import express, { Request, Response } from "express";
+import { body } from "express-validator";
+import jwt from "jsonwebtoken";
+import User from "../models/User";
+import { BadRequestError } from "../errors/bad-request-error";
+import { validateRequest } from "../middlewares/validate-request";
 
+const router = express.Router();
 
+router.post(
+  "/api/users/signin",
+  [
+    body("email").isEmail().withMessage("Email must be valid"),
+    body("password").trim().notEmpty().withMessage("Password is required"),
+  ],
+  validateRequest,
+  async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+    //check if exists
+    const existingUser = await User.findOne({ email });
+    if (!existingUser) {
+      throw new BadRequestError("Invalid credentials");
+    }
+    res.send(existingUser);
+  }
+);
 
-router.post('/api/users/signin',(req,res)=>{
-res.send('Hi from curent signin! To see response in chrome , click on browser and type thisisunsafe')
-})
-
-export {router as signinRouter}
+export { router as signinRouter };
