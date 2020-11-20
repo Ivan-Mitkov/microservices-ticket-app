@@ -1,10 +1,6 @@
-import express, { Request, Response } from "express";
-import { body } from "express-validator";
+import express from "express";
 import jwt from "jsonwebtoken";
-import User from "../models/User";
-import { BadRequestError } from "../errors/bad-request-error";
-import { validateRequest } from "../middlewares/validate-request";
-import { Password } from "../services/password";
+
 
 const router = express.Router();
 
