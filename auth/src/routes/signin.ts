@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/User";
 import { BadRequestError } from "../errors/bad-request-error";
 import { validateRequest } from "../middlewares/validate-request";
+import { Password } from "../services/password";
 
 const router = express.Router();
 
@@ -21,7 +22,28 @@ router.post(
     if (!existingUser) {
       throw new BadRequestError("Invalid credentials");
     }
-    res.send(existingUser);
+    //check password
+    const isPasswordMatch = await Password.compare(
+      existingUser.password,
+      password
+    );
+    if (!isPasswordMatch) {
+      throw new BadRequestError("Invalid credentials");
+    }
+    //generate jwt
+    const userJwt = jwt.sign(
+      { id: existingUser.id, email: existingUser.email },
+      //chek in index.ts
+      process.env.jwt!
+    );
+    //store on session object
+    //jwt is possibly null so redefine the object <TS>
+    // req.session.jwt=userJwt
+    req.session = {
+      jwt: userJwt,
+    };
+    //send back user document
+    res.status(200).send(existingUser);
   }
 );
 
