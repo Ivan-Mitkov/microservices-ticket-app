@@ -5,6 +5,7 @@ import { app } from "../app";
 let mongo: any;
 //before test start create new instance of memory server
 beforeAll(async () => {
+  process.env.jwt = "hjdshdskjh";
   mongo = new MongoMemoryServer();
   const mongoUri = await mongo.getUri();
   await mongoose.connect(mongoUri, {
