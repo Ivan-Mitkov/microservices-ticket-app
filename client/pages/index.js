@@ -22,9 +22,10 @@ const Home = ({ currentUser }) => {
     </div>
   );
 };
+//invoked from _app.js
 Home.getInitialProps = async (context) => {
   const { data } = await buildClient(context).get("/api/users/currentuser");
-  console.log(data);
+  // console.log("Get initial props home page");
   return data;
 };
 export default Home;
