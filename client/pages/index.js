@@ -7,11 +7,15 @@ const Home = ({ currentUser }) => {
     <div className={styles.container}>
       <Head>
         <title>Ticketing</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>Ticketing</h1>
+        <div>
+          {currentUser
+            ? `You are logged in with ${currentUser.email}`
+            : `Not logged in`}
+        </div>
       </main>
 
       <footer className={styles.footer}>Footer</footer>
