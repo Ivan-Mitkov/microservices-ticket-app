@@ -18,9 +18,8 @@ const Home = ({ currentUser }) => {
     </div>
   );
 };
-Home.getInitialProps = async () => {
-  // const response = await axios.get("/api/users/currentuser");
-  // return response.data;
+Home.getInitialProps = async ({ req }) => {
+  // console.log(req.headers);
   if (typeof window === "undefined") {
     //we are on the server
     console.log("Get initial props server");
@@ -28,9 +27,10 @@ Home.getInitialProps = async () => {
       "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentuser",
       {
         //ingress doesn't know the host when we are using namespace and services
-        headers: {
-          Host: "ticketing.dev",
-        },
+        // headers: {
+        //   Host: "ticketing.dev",
+        // },
+        headers: req.headers,
       }
     );
     console.log(response.data);
