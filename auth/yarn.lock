@@ -466,6 +466,19 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@microauth/common@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@microauth/common/-/common-1.0.2.tgz#dedf4ce8e454dd53ea96a54b2bd035fe8bba93f3"
+  integrity sha512-6vxkQw9KwTxvnBzoOh71tuMCljuupMSYcoPjzzcySmDyJARQ+CUhlhIrQdKfc1qiONH2dVIhtit4v8Ojq/awJQ==
+  dependencies:
+    "@types/cookie-session" "^2.0.41"
+    "@types/express" "^4.17.9"
+    "@types/jsonwebtoken" "^8.5.0"
+    cookie-session "^1.4.0"
+    express "^4.17.1"
+    express-validator "^6.6.1"
+    jsonwebtoken "^8.5.1"
+
 "@sinonjs/commons@^1.7.0":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.8.1.tgz#e7df00f98a203324f6dc7cc606cad9d4a8ab2217"
