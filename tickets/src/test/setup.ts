@@ -41,7 +41,10 @@ afterAll(async () => {
 //works only in tests
 global.signin = () => {
   //Build a jwt payload {id,email}
-  const payload = { id: "2189ds71987fd12", email: "test@test.com" };
+  const payload = {
+    id: new mongoose.Types.ObjectId().toHexString(),
+    email: "test@test.com",
+  };
   //create jwt
   const token = jwt.sign(payload, process.env.jwt!);
   //build session object {jwt:MY_JWT}
