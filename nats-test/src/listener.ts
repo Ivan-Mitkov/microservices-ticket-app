@@ -12,6 +12,11 @@ const stan = nats.connect("ticketing", id, {
 
 stan.on("connect", () => {
   console.log("Listener connected to NATS");
+  //gracefull shutdown of the client
+  stan.on("close", () => {
+    console.log("NATS connection closed");
+    process.exit();
+  });
   //subscribtion to the chanel and queue group
   /**
    * Configures the subscription to require manual acknowledgement of messages
@@ -37,3 +42,8 @@ stan.on("connect", () => {
     msg.ack();
   });
 });
+
+//intercept server and close client first
+//DOESN't WORK ON WINDOWS
+process.on("SIGINT", () => stan.close());
+process.on("SIGTERM", () => stan.close());

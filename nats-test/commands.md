@@ -13,3 +13,9 @@ yarn run publish
 and from other terminal
 
 yarn run listen
+
+### for monitoring 
+kubectl port-forward nats-depl-5fd7f56cfd-kkps4 8222:8222
+
+go to browser localhost:8222/streaming
+http://localhost:8222/streaming/channelsz?subs=1
