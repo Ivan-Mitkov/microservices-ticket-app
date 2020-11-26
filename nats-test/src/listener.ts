@@ -1,5 +1,6 @@
-import nats, { Message } from "node-nats-streaming";
+import nats from "node-nats-streaming";
 import { randomBytes } from "crypto";
+import TicketCreatedListener from "./events/ticket-created-listener";
 console.clear();
 
 //create random client id
@@ -17,37 +18,7 @@ stan.on("connect", () => {
     console.log("NATS connection closed");
     process.exit();
   });
-  //subscribtion to the chanel and queue group
-  /**
-   * Configures the subscription to require manual acknowledgement of messages
-   * using Message#acknowledge.
-   * @param tf - true if manual acknowlegement is required.
-   */
-  const options = stan
-    .subscriptionOptions()
-    .setManualAckMode(true)
-    //bring all events emited in the past before service start
-    .setDeliverAllAvailable()
-    //make register of not delivered events when service not working and send them when online
-    .setDurableName("order-service");
-  //https://docs.nats.io/nats-streaming-concepts/channels/subscriptions/queue-group
-  //events go to just one member of queue group
-  const subscription = stan.subscribe(
-    "ticket:created",
-    //when there is q group nats is going to persist durable name
-    "listenerQueueGroup",
-    options
-  );
-  subscription.on("message", (msg: Message) => {
-    const data = msg.getData();
-    if (typeof data === "string") {
-      console.log(`Received event #${msg.getSequence()}, with data ${data}`);
-    }
-
-    //setManualAckMode(true);
-    //we receive the message don't send it to other service in queue
-    msg.ack();
-  });
+  new TicketCreatedListener(stan).listen();
 });
 
 //intercept server and close client first
