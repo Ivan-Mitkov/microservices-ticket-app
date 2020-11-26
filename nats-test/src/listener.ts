@@ -23,11 +23,18 @@ stan.on("connect", () => {
    * using Message#acknowledge.
    * @param tf - true if manual acknowlegement is required.
    */
-  const options = stan.subscriptionOptions().setManualAckMode(true);
+  const options = stan
+    .subscriptionOptions()
+    .setManualAckMode(true)
+    //bring all events emited in the past before service start
+    .setDeliverAllAvailable()
+    //make register of not delivered events when service not working and send them when online
+    .setDurableName("order-service");
   //https://docs.nats.io/nats-streaming-concepts/channels/subscriptions/queue-group
   //events go to just one member of queue group
   const subscription = stan.subscribe(
     "ticket:created",
+    //when there is q group nats is going to persist durable name
     "listenerQueueGroup",
     options
   );
