@@ -16,13 +16,20 @@ const start = async () => {
   //   port: 27017
   try {
     //connect to event bus
-    //clusterId from infra/k8s/nats-depl.yaml spec: containers: args: [
-    //   '-cid',
-    //   'ticketing'
-    // ]
+    //clusterId from infra/k8s/nats-depl.yaml spec: containers: args: ['-cid', 'ticketing'
     //clientId more or less random value
     //url from service in yaml
     await natsWrapper.connect("ticketing", "dsdsedf", "http://nats-srv:4222");
+
+    //gracefull shutdown of the client
+    natsWrapper.client.on("close", () => {
+      console.log("NATS connection closed");
+      process.exit();
+    });
+    //intercept server and close client first
+    //DOESN't WORK ON WINDOWS
+    process.on("SIGINT", () => natsWrapper.client.close());
+    process.on("SIGTERM", () => natsWrapper.client.close());
     //mongodb://[service]:[port]/[name of db mongo wiil create if not existing ]
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
