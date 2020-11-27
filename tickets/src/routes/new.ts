@@ -3,6 +3,7 @@ import { requireAuth } from "@microauth/common";
 import { body } from "express-validator";
 import { validateRequest } from "@microauth/common";
 import Ticket from "../models/Ticket";
+import { TicketCreatedPublisher } from "../events/publishers/ticket-created-publisher";
 const router = express.Router();
 
 router.post(
@@ -21,6 +22,13 @@ router.post(
     const { title, price } = req.body;
     const ticket = Ticket.build({ title, price, userId: req.currentUser!.id });
     await ticket.save();
+    //publish event after save to DB
+    // await new TicketCreatedPublisher(client).publish({
+    //   id: ticket.id,
+    //   title: ticket.title,
+    //   price: ticket.price,
+    //   userId: ticket.userId,
+    // });
     res.status(201).send(ticket);
   }
 );

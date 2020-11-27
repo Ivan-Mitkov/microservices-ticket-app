@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { app } from "./app";
+import { natsWrapper } from "./nats-wrapper";
 
 const start = async () => {
   //check if env variable is defined
@@ -14,6 +15,14 @@ const start = async () => {
   // ports:
   //   port: 27017
   try {
+    //connect to event bus
+    //clusterId from infra/k8s/nats-depl.yaml spec: containers: args: [
+    //   '-cid',
+    //   'ticketing'
+    // ]
+    //clientId more or less random value
+    //url from service in yaml
+    await natsWrapper.connect("ticketing", "dsdsedf", "http://nats-srv:4222");
     //mongodb://[service]:[port]/[name of db mongo wiil create if not existing ]
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
