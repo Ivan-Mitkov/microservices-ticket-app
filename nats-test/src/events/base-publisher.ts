@@ -12,10 +12,16 @@ export abstract class Publisher<T extends Event> {
     this.client = client;
   }
 
-  publish(data: T["data"]) {
-    const dataToString = JSON.stringify(data);
-    this.client.publish(this.subject, dataToString, () => {
-      console.log("Event publish");
+  publish(data: T["data"]): Promise<void> {
+    return new Promise((res, rej) => {
+      const dataToString = JSON.stringify(data);
+      this.client.publish(this.subject, dataToString, (err) => {
+        if (err) {
+          return rej(err);
+        }
+        console.log(`Event published to subject ${this.subject}`);
+        res();
+      });
     });
   }
 }
