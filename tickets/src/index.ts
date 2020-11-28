@@ -22,6 +22,7 @@ const start = async () => {
     await natsWrapper.connect("ticketing", "dsdsedf", "http://nats-srv:4222");
 
     //gracefull shutdown of the client
+    //put it in index to be seen easily
     natsWrapper.client.on("close", () => {
       console.log("NATS connection closed");
       process.exit();
