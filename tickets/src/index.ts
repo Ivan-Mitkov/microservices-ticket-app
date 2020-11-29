@@ -10,6 +10,15 @@ const start = async () => {
   if (!process.env.MONGO_URI) {
     throw new Error("ENV Variable Not Found");
   }
+  if (!process.env.NATS_URL) {
+    throw new Error("ENV Variable Not Found");
+  }
+  if (!process.env.NATS_CLUSTER_ID) {
+    throw new Error("ENV Variable Not Found");
+  }
+  if (!process.env.NATS_CLIENT_ID) {
+    throw new Error("ENV Variable Not Found");
+  }
   //connect to ClusterIp service
   // name: auth-mongo-srv
   // ports:
@@ -19,7 +28,11 @@ const start = async () => {
     //clusterId from infra/k8s/nats-depl.yaml spec: containers: args: ['-cid', 'ticketing'
     //clientId more or less random value
     //url from service in yaml
-    await natsWrapper.connect("ticketing", "dsdsedf", "http://nats-srv:4222");
+    await natsWrapper.connect(
+      process.env.NATS_CLUSTER_ID,
+      process.env.NATS_CLIENT_ID,
+      process.env.NATS_URL
+    );
 
     //gracefull shutdown of the client
     //put it in index to be seen easily
