@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 import { app } from "../../app";
 import Ticket from "../../models/Ticket";
 
+//mocks and real file with same path from this module
+jest.mock("../../nats-wrapper");
+
 const generateValidId = () => {
   return new mongoose.Types.ObjectId().toHexString();
 };

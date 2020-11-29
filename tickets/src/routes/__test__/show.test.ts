@@ -1,13 +1,12 @@
 import request from "supertest";
 import { app } from "../../app";
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
+//mocks and real file with same path from this module
+jest.mock("../../nats-wrapper.ts");
 
 it("should returns status 404 if the ticket is not found", async () => {
-  const id=mongoose.Types.ObjectId().toHexString()
-  await request(app)
-    .get(`/api/tickets/${id}`)
-    .send()
-    .expect(404);
+  const id = mongoose.Types.ObjectId().toHexString();
+  await request(app).get(`/api/tickets/${id}`).send().expect(404);
 });
 it("should returns the ticket if the ticket is found ", async () => {
   const title = "Concert";

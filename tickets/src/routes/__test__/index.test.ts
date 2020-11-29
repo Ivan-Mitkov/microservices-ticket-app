@@ -3,6 +3,7 @@ import { app } from "../../app";
 import Ticket from "../../models/Ticket";
 import { createTicketRouter } from "../new";
 
+
 const createTicket = (title: string, price: number) => {
   return request(app)
     .post("/api/tickets")
