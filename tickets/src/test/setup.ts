@@ -11,9 +11,14 @@ declare global {
     }
   }
 }
+
+//mocks and real file with same path from this module
+jest.mock("../nats-wrapper");
 let mongo: any;
 //before test start create new instance of memory server
 beforeAll(async () => {
+  //clear natsWrapper publish mock
+  jest.clearAllMocks()
   process.env.jwt = "hjdshdskjh";
   mongo = new MongoMemoryServer();
   const mongoUri = await mongo.getUri();

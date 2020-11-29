@@ -2,9 +2,7 @@ import request from "supertest";
 import mongoose from "mongoose";
 import { app } from "../../app";
 import Ticket from "../../models/Ticket";
-
-//mocks and real file with same path from this module
-jest.mock("../../nats-wrapper");
+import { natsWrapper } from "../../nats-wrapper";
 
 const generateValidId = () => {
   return new mongoose.Types.ObjectId().toHexString();
@@ -72,4 +70,23 @@ it("should update the ticket with valid price and tickets", async () => {
   console.log(ticketResponse.body);
   expect(ticketResponse.body.title).toEqual("sadsd");
   expect(ticketResponse.body.price).toEqual(12);
+});
+
+//TESTING MOCK NATS
+it("should publish an event", async () => {
+  //update ticket
+  const user = global.signin();
+  const response = await request(app)
+    .post("/api/tickets")
+    .set("Cookie", user)
+    .send({ title: "lklk", price: 20 });
+  await request(app)
+    .put(`/api/tickets/${response.body.id}`)
+    .set("Cookie", user)
+    .send({ title: "sadsd", price: 12 })
+    .expect(200);
+  //check if mock published function is actualy invoked
+
+  // console.log(natsWrapper);
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

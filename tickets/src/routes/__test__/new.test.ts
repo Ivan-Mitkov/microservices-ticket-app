@@ -1,9 +1,9 @@
 import request from "supertest";
 import { app } from "../../app";
 import Ticket from "../../models/Ticket";
+//jest will import the mock nats-wrapper
+import { natsWrapper } from "../../nats-wrapper";
 
-//use mock file //mocks and real file with same path from this module
-jest.mock("../../nats-wrapper");
 it("has a route handler listening to /api/tickets for post requests ", async () => {
   const response = await request(app).post("/api/tickets").send({});
 
@@ -65,4 +65,18 @@ it("creates a ticket with valid inputs", async () => {
   expect(tickets.length).toEqual(1);
   expect(tickets[0].title).toEqual("some title");
   expect(tickets[0].price).toEqual(21.21);
+});
+
+//TESTING MOCK NATS
+it("should publish an event", async () => {
+  //create ticket
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", global.signin())
+    .send({ title: "some title", price: 21.21 })
+    .expect(201);
+  //check if mock published function is actualy invoked
+
+  // console.log(natsWrapper);
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });
