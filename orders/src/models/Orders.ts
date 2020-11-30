@@ -1,9 +1,12 @@
 import mongoose from "mongoose";
+import { OrderStatus } from "@microauth/common";
+import { TicketDoc } from "./Ticket";
 //an iteface that describes the properties that a required to create new Order
 interface OrderAttrs {
-  title: string;
-  price: number;
   userId: string;
+  status: OrderStatus;
+  expiresAt: Date;
+  ticket: TicketDoc;
 }
 //an iteface that describes the properties that a Order model has
 
@@ -12,23 +15,29 @@ interface OrderModel extends mongoose.Model<OrderDoc> {
 }
 //an inteface for Order Document
 interface OrderDoc extends mongoose.Document {
-  title: string;
-  price: number;
   userId: string;
+  status: string;
+  expiresAt: Date;
+  ticket: TicketDoc;
 }
 const orderSchema = new mongoose.Schema(
   {
-    title: {
+    status: {
       type: String,
       required: true,
+      enum: Object.values(OrderStatus),
+      default: OrderStatus.Created,
     },
-    price: {
-      type: Number,
-      required: true,
+    expiresAt: {
+      type: mongoose.Schema.Types.Date,
     },
     userId: {
       type: String,
       required: true,
+    },
+    ticket: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Ticket",
     },
   },
   {

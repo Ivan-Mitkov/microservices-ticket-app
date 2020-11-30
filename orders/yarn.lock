@@ -467,9 +467,9 @@
     chalk "^4.0.0"
 
 "@microauth/common@^1.0.2":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@microauth/common/-/common-1.0.4.tgz#5dd77a03abb2f102b527c7cc133bbc17c9668273"
-  integrity sha512-zvrxA8ciLFpimdnCSILwlMcuxjAQRmHcVzS+jVby2yQyShjxM/nDjJDcb57kMPLwIB9Gcegvped8Hb5THM3Hsw==
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@microauth/common/-/common-1.0.6.tgz#d137d94a226d4db8b5398add60929bc1a7bea7d7"
+  integrity sha512-sDt8/mWmtPtG6s+LoK++aJTIc5WhSULogRPJPIVaCchIwYylusz/SV1guDJv33Po2cCbwHFZ+MleXlj/cwRWvA==
   dependencies:
     "@types/cookie-session" "^2.0.41"
     "@types/express" "^4.17.9"
