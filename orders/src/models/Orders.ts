@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import { OrderStatus } from "@microauth/common";
 import { TicketDoc } from "./Ticket";
+
+export { OrderStatus };
 //an iteface that describes the properties that a required to create new Order
 interface OrderAttrs {
   userId: string;
