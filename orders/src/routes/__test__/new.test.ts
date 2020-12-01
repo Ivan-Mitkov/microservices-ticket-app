@@ -6,7 +6,6 @@ import Ticket from "../../models/Ticket";
 
 //jest will import the mock nats-wrapper
 import { natsWrapper } from "../../nats-wrapper";
-import { requireAuth } from "@microauth/common";
 
 it("returns an error if ticket does not exists ", async () => {
   const ticketId = mongoose.Types.ObjectId();
@@ -67,4 +66,31 @@ it("reserves a ticket ", async () => {
     .expect(201);
 });
 
-it.todo("Emits an order created event");
+it("Emits an order created event", async () => {
+  //create a ticket and save it
+  const ticket = Ticket.build({
+    title: "Concert",
+    price: 22,
+  });
+  await ticket.save();
+  // //create an order
+  const order = Order.build({
+    ticket,
+    userId: "jkjlkjku",
+    status: OrderStatus.Cancelled,
+    //not realy matters right now
+    expiresAt: new Date(),
+  });
+
+  await order.save();
+
+  await request(app)
+    .post("/api/orders")
+    .set("Cookie", global.signin())
+    .send({ ticketId: ticket.id })
+    .expect(201);
+  //check if mock published function is actualy invoked
+
+  // console.log(natsWrapper);
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
+});
