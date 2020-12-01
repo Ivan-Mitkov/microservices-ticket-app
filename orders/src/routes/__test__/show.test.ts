@@ -1,11 +1,12 @@
 import request from "supertest";
 import { app } from "../../app";
-import Ticket from "../../models/Ticket";
+import { Ticket } from "../../models/Ticket";
 
 const buildTicket = async () => {
   const ticket = Ticket.build({
     title: "football",
     price: 100,
+    id: "jkljlk",
   });
   await ticket.save();
   return ticket;

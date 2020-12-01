@@ -1,8 +1,8 @@
 import request from "supertest";
 import { app } from "../../app";
 import mongoose from "mongoose";
-import Order, { OrderStatus } from "../../models/Orders";
-import Ticket from "../../models/Ticket";
+import  {Order, OrderStatus } from "../../models/Orders";
+import { Ticket } from "../../models/Ticket";
 
 //jest will import the mock nats-wrapper
 import { natsWrapper } from "../../nats-wrapper";
@@ -21,6 +21,7 @@ it("returns an error if ticket is already reserved ", async () => {
   const ticket = Ticket.build({
     title: "Concert",
     price: 22,
+    id:'jkjl'
   });
   await ticket.save();
   //create an order
@@ -46,6 +47,7 @@ it("reserves a ticket ", async () => {
   const ticket = Ticket.build({
     title: "Concert",
     price: 22,
+    id:'jklj'
   });
   await ticket.save();
   // //create an order
@@ -71,6 +73,7 @@ it("Emits an order created event", async () => {
   const ticket = Ticket.build({
     title: "Concert",
     price: 22,
+    id:'kjl;k;'
   });
   await ticket.save();
   // //create an order

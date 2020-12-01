@@ -467,9 +467,9 @@
     chalk "^4.0.0"
 
 "@microauth/common@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@microauth/common/-/common-1.0.7.tgz#8dd393ae64f1ae07fc06b66935c93888f532ab4f"
-  integrity sha512-p9ez05b5y0durULusrqG+eVO0/480fZ9N49U3WUK9KOsohb7ivjdylI1Zc+lSpU8Z2oRqEMOYIZXGVtXBk3jhA==
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@microauth/common/-/common-1.0.8.tgz#b099b3d939f721f05395191290cb71ee20417a77"
+  integrity sha512-PqKBl+tvQLtADx2jshaIHg9p1dFZL4BzE4sa0YWeT1Vqcy/akNthocU53taZ9SHncwu3L+eP9BEFACRJ8Awcqw==
   dependencies:
     "@types/cookie-session" "^2.0.41"
     "@types/express" "^4.17.9"
@@ -3351,10 +3351,10 @@ mongoose-legacy-pluralize@1.0.2:
   resolved "https://registry.yarnpkg.com/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz#3ba9f91fa507b5186d399fb40854bff18fb563e4"
   integrity sha512-Yo/7qQU4/EyIS8YDFSeenIvXxZN+ld7YdV9LqFVQJzTLye8unujAWPZ4NWKfFA+RNjh+wvTWKY9Z3E5XM6ZZiQ==
 
-mongoose@^5.10.15:
-  version "5.10.17"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.10.17.tgz#8754cdaf0dc7964d512ed1889546528fb42e9eb8"
-  integrity sha512-B7kcEaXbgdTQiloKfr9qQMdo5WOrTKEqIoWY9RWiMMAvbn+8n/vBjBKIH9wc/U+8Y4SIvfRf6kenfWbjLVe2YA==
+mongoose@5.10.15:
+  version "5.10.15"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.10.15.tgz#5e559467890e0883d2a1ff0470a7467a1b47e52d"
+  integrity sha512-3QUWCpMRdFCPIBZkjG/B2OkfMY2WLkR+hv335o4T2mn3ta9kx8qVvXeUDojp3OHMxBZVUyCA+hDyyP4/aKmHuA==
   dependencies:
     bson "^1.1.4"
     kareem "2.3.1"

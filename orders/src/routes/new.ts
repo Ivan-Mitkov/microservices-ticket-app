@@ -8,8 +8,8 @@ import {
   validateRequest,
 } from "@microauth/common";
 import { body } from "express-validator";
-import Ticket from "../models/Ticket";
-import Order from "../models/Orders";
+import { Ticket } from "../models/Ticket";
+import {Order} from "../models/Orders";
 import { OrderCreatedPublisher } from "../events/publishers/order-created-publisher";
 import { natsWrapper } from "../nats-wrapper";
 

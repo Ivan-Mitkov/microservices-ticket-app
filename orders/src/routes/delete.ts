@@ -5,7 +5,7 @@ import {
   NotAuthorizedError,
 } from "@microauth/common";
 
-import Order, { OrderStatus } from "../models/Orders";
+import  {Order, OrderStatus } from "../models/Orders";
 import { OrderCancelledPublisher } from "../events/publishers/order-cancelled-publisher";
 import { natsWrapper } from "../nats-wrapper";
 const router = express.Router();

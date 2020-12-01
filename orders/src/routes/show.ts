@@ -5,7 +5,7 @@ import {
   NotAuthorizedError,
 } from "@microauth/common";
 
-import Order from "../models/Orders";
+import { Order } from "../models/Orders";
 
 const router = express.Router();
 router.get(

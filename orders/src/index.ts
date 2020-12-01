@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import { app } from "./app";
 import { natsWrapper } from "./nats-wrapper";
+import { TicketCreatedListener } from "./events/listeners/ticket-created-listener";
+import { TicketUpdatedListener } from "./events/listeners/ticket-updated-listener";
 
 const start = async () => {
   //check if env variable is defined
@@ -19,6 +21,8 @@ const start = async () => {
   if (!process.env.NATS_CLIENT_ID) {
     throw new Error("ENV Variable Not Found");
   }
+
+  //CREATE CONNECTION TO NATS
   //connect to ClusterIp service
   // name: auth-mongo-srv
   // ports:
@@ -44,6 +48,12 @@ const start = async () => {
     //DOESN't WORK ON WINDOWS
     process.on("SIGINT", () => natsWrapper.client.close());
     process.on("SIGTERM", () => natsWrapper.client.close());
+
+    //CONNECT LISTENERS
+    new TicketUpdatedListener(natsWrapper.client).listen();
+    new TicketCreatedListener(natsWrapper.client).listen();
+
+    //CONNECT TO MONGO
     //mongodb://[service]:[port]/[name of db mongo wiil create if not existing ]
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
