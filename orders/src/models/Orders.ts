@@ -21,6 +21,7 @@ interface OrderDoc extends mongoose.Document {
   status: string;
   expiresAt: Date;
   ticket: TicketDoc;
+  version: number;
 }
 const orderSchema = new mongoose.Schema(
   {
@@ -58,4 +59,4 @@ orderSchema.statics.build = (attrs: OrderAttrs) => {
 };
 const Order = mongoose.model<OrderDoc, OrderModel>("Order", orderSchema);
 
-export  {Order};
+export { Order };

@@ -58,7 +58,7 @@ router.post(
       expiresAt: savedOrder.expiresAt.toISOString(),
       ticket: { id: ticket.id, price: ticket.price },
       status: OrderStatus.Created,
-      version: ticket.version,
+      version: order.version,
     });
     res.status(201).send({ order });
   }

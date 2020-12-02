@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { NotFoundError, requireAuth } from "@microauth/common";
 
-import {Order} from "../models/Orders";
+import { Order } from "../models/Orders";
 
 const router = express.Router();
 router.get("/api/orders", requireAuth, async (req: Request, res: Response) => {
