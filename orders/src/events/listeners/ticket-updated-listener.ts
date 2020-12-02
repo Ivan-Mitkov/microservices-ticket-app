@@ -1,6 +1,6 @@
 import { Message } from "node-nats-streaming";
 import { Subjects, TicketUpdatedEvent, Listener } from "@microauth/common";
-import {Ticket} from "../../models/Ticket";
+import { Ticket } from "../../models/Ticket";
 import { QUEUE_GROUP_NAME } from "./queue-group-name";
 
 export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
@@ -9,8 +9,10 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
   queueGroupName = QUEUE_GROUP_NAME;
   async onMessage(data: TicketUpdatedEvent["data"], msg: Message) {
     //Ticket model in order service
-    const { title, price, id, userId } = data;
-    const ticket = await Ticket.findById(id);
+    const { title, price, id, userId, version } = data;
+    //CONCURRENCY find previous ticket
+    const ticket = await Ticket.findByEvent({ id, version });
+    //if version is out of order
     if (!ticket) {
       throw new Error("Tciket not found");
     }

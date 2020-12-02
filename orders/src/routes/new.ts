@@ -9,7 +9,7 @@ import {
 } from "@microauth/common";
 import { body } from "express-validator";
 import { Ticket } from "../models/Ticket";
-import {Order} from "../models/Orders";
+import { Order } from "../models/Orders";
 import { OrderCreatedPublisher } from "../events/publishers/order-created-publisher";
 import { natsWrapper } from "../nats-wrapper";
 
@@ -58,6 +58,7 @@ router.post(
       expiresAt: savedOrder.expiresAt.toISOString(),
       ticket: { id: ticket.id, price: ticket.price },
       status: OrderStatus.Created,
+      version: ticket.version,
     });
     res.status(201).send({ order });
   }

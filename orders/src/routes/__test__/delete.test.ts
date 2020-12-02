@@ -1,14 +1,14 @@
 import { OrderStatus } from "@microauth/common";
 import request from "supertest";
 import { app } from "../../app";
-import {Order} from "../../models/Orders";
-import {Ticket} from "../../models/Ticket";
+import { Order } from "../../models/Orders";
+import { Ticket } from "../../models/Ticket";
 //jest will import the mock nats-wrapper
 import { natsWrapper } from "../../nats-wrapper";
 
 const buildTicket = async () => {
   const ticket = Ticket.build({
-    id:'dss',
+    id: "dss",
     title: "football",
     price: 100,
   });
