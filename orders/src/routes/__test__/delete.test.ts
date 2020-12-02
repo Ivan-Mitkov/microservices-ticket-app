@@ -1,4 +1,5 @@
 import { OrderStatus } from "@microauth/common";
+import mongoose from "mongoose";
 import request from "supertest";
 import { app } from "../../app";
 import { Order } from "../../models/Orders";
@@ -7,8 +8,9 @@ import { Ticket } from "../../models/Ticket";
 import { natsWrapper } from "../../nats-wrapper";
 
 const buildTicket = async () => {
+  const id = mongoose.Types.ObjectId().toHexString();
   const ticket = Ticket.build({
-    id: "dss",
+    id,
     title: "football",
     price: 100,
   });
