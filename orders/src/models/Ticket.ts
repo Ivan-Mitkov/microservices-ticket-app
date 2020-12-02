@@ -49,8 +49,15 @@ const ticketSchema = new mongoose.Schema(
 //Optimistic concurrency control with versions
 //use field version instead __v
 ticketSchema.set("versionKey", "version");
-ticketSchema.plugin(updateIfCurrentPlugin);
-
+// ticketSchema.plugin(updateIfCurrentPlugin);
+ticketSchema.pre("save", function (done) {
+  //modify version if increment by substract 1
+  //@ts-ignore
+  this.$where = {
+    version: this.get("version") - 1,
+  };
+  done();
+});
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
   const { id, title, price } = attrs;
   return new Ticket({
