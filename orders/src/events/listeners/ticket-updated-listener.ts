@@ -16,7 +16,7 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
     if (!ticket) {
       throw new Error("Tciket not found");
     }
-    ticket.set({ title, price });
+    ticket.set({ title, price,version });
     await ticket.save();
     //Accept message
     msg.ack();
