@@ -14,7 +14,7 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
     const ticket = await Ticket.findByEvent({ id, version });
     //if version is out of order
     if (!ticket) {
-      throw new Error("Tciket not found");
+      throw new Error("Ticket not found");
     }
     ticket.set({ title, price });
     await ticket.save();
