@@ -466,10 +466,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@microauth/common@^1.0.2":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@microauth/common/-/common-1.0.8.tgz#b099b3d939f721f05395191290cb71ee20417a77"
-  integrity sha512-PqKBl+tvQLtADx2jshaIHg9p1dFZL4BzE4sa0YWeT1Vqcy/akNthocU53taZ9SHncwu3L+eP9BEFACRJ8Awcqw==
+"@microauth/common@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@microauth/common/-/common-1.0.9.tgz#d242cca2bdc06b142555ce9a2d973598f33ad3fa"
+  integrity sha512-M+3TWaPLrnM58HoGJlPZnj2GqcLf1WhVCxrASeOEpowDGOy7SuCPan6pWZjcrjrV0wRh7RBZAg+0GsN11l3NRg==
   dependencies:
     "@types/cookie-session" "^2.0.41"
     "@types/express" "^4.17.9"
