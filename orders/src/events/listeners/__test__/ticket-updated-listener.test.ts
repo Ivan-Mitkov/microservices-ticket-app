@@ -55,3 +55,16 @@ it("should ack a message", async () => {
   //write assertion to make sure ack function was called
   expect(msg.ack).toHaveBeenCalled();
 });
+
+it("should not call ack if the event has future version ", async () => {
+  const { listener, data, msg, ticket } = await setup();
+  data.version = 10;
+
+  //write assertion to make sure ack function was called
+  try {
+    //call on message with the data object + message object
+    await listener.onMessage(data, msg);
+  } catch (error) {}
+
+  expect(msg.ack).not.toHaveBeenCalled();
+});
