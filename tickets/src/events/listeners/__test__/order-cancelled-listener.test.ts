@@ -1,31 +1,28 @@
 import mongoose from "mongoose";
 import { Message } from "node-nats-streaming";
-import { OrderCreatedEvent, OrderStatus } from "@microauth/common";
-import { OrderCreatedListener } from "../order-created-listener";
+import { OrderCancelledEvent, OrderStatus } from "@microauth/common";
+import { OrderCancelledListener } from "../order-cancelled-listener";
 import { natsWrapper } from "../../../nats-wrapper";
 import Ticket from "../../../models/Ticket";
-
 const setup = async () => {
   //create an instance of the listener
-  const listener = new OrderCreatedListener(natsWrapper.client);
+  const listener = new OrderCancelledListener(natsWrapper.client);
   //create and save a ticket
   const userId = mongoose.Types.ObjectId().toHexString();
+  const orderId = mongoose.Types.ObjectId().toHexString();
   const ticket = Ticket.build({
     title: "concert",
     price: 21,
     userId,
   });
+  ticket.set(orderId);
   const savedTicket = await ticket.save();
   //create fake data object
-  const data: OrderCreatedEvent["data"] = {
+  const data: OrderCancelledEvent["data"] = {
     id: mongoose.Types.ObjectId().toHexString(),
     version: 0,
-    status: OrderStatus.Created,
-    userId,
-    expiresAt: new Date().toISOString() + 360000,
     ticket: {
       id: savedTicket.id,
-      price: ticket.price,
     },
   };
   //create fake message
@@ -48,7 +45,7 @@ it("should set the orderId of the ticket", async () => {
   await listener.onMessage(data, msg);
   //get update ticket from DB and check orderId
   const updatedTicket = await Ticket.findById(ticket.id);
-  expect(updatedTicket?.orderId).toEqual(data.id);
+  expect(updatedTicket?.orderId).toBeUndefined();
 });
 
 it("should publish ticket updated event ", async () => {
@@ -70,5 +67,5 @@ it("should publish ticket updated event ", async () => {
   );
   // console.log("ticket updated:", ticketUpdatedData);
   // console.log("second data: ", data);
-  expect(data.id).toEqual(ticketUpdatedData.orderId);
+  expect(ticketUpdatedData.orderId).toBeUndefined();
 });

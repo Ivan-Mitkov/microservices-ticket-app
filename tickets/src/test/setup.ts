@@ -18,7 +18,7 @@ let mongo: any;
 //before test start create new instance of memory server
 beforeAll(async () => {
   //clear natsWrapper publish mock
-  jest.clearAllMocks()
+  jest.clearAllMocks();
   process.env.jwt = "hjdshdskjh";
   mongo = new MongoMemoryServer();
   const mongoUri = await mongo.getUri();
@@ -30,6 +30,8 @@ beforeAll(async () => {
 
 beforeEach(async () => {
   const collections = await mongoose.connection.db.collections();
+  jest.clearAllMocks();
+
   //reset all data
   for (const collection of collections) {
     await collection.deleteMany({});
