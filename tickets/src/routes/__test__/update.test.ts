@@ -90,3 +90,21 @@ it("should publish an event", async () => {
   // console.log(natsWrapper);
   expect(natsWrapper.client.publish).toHaveBeenCalled();
 });
+
+it("should reject update if the ticket is reserved ", async () => {
+  const user = global.signin();
+  const response = await request(app)
+    .post("/api/tickets")
+    .set("Cookie", user)
+    .send({ title: "lklk", price: 20 });
+  //change the ticket
+  const ticket = await Ticket.findById(response.body.id);
+  ticket?.set({ orderId: mongoose.Types.ObjectId().toHexString() });
+  await ticket?.save();
+  //try to edit
+  await request(app)
+    .put(`/api/tickets/${response.body.id}`)
+    .set("Cookie", user)
+    .send({ title: "sadsd", price: 12 })
+    .expect(400);
+});
