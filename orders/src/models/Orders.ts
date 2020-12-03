@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 import { OrderStatus } from "@microauth/common";
 import { TicketDoc } from "./Ticket";
 
@@ -52,10 +53,29 @@ const orderSchema = new mongoose.Schema(
     },
   }
 );
+//CONCURRENCY
+//Optimistic concurrency control with versions
+//use field version instead __v
+orderSchema.set("versionKey", "version");
+orderSchema.plugin(updateIfCurrentPlugin);
 
 //call this function instead new Order({}) for type checking
 orderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order(attrs);
+};
+//CONCURRENCY
+orderSchema.statics.findByEvent = async (event: {
+  id: string;
+  version: number;
+}) => {
+  //find the order with two parameters id and VERSION NUMBER
+  const order = await Order.findOne({
+    _id: event.id,
+    //order is updated in order service, and the version in data is +1
+    //to find in Order DB we need to substract 1
+    version: event.version - 1,
+  });
+  return order;
 };
 const Order = mongoose.model<OrderDoc, OrderModel>("Order", orderSchema);
 

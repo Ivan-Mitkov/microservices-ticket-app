@@ -17,6 +17,8 @@ interface TicketDoc extends mongoose.Document {
   price: number;
   userId: string;
   version: number;
+  //optional
+  orderId?: string;
 }
 const ticketSchema = new mongoose.Schema(
   {
@@ -31,6 +33,10 @@ const ticketSchema = new mongoose.Schema(
     userId: {
       type: String,
       required: true,
+    },
+    //reservation of the ticket by an order, if the ticket is nor reserved is undefined
+    orderId: {
+      type: String,
     },
   },
   {
