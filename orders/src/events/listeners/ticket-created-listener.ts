@@ -1,10 +1,6 @@
 import { Message } from "node-nats-streaming";
-import {
-  Subjects,
-  Listener,
-  TicketCreatedEvent,
-} from "@microauth/common";
-import {Ticket} from "../../models/Ticket";
+import { Subjects, Listener, TicketCreatedEvent } from "@microauth/common";
+import { Ticket } from "../../models/Ticket";
 import { QUEUE_GROUP_NAME } from "./queue-group-name";
 
 export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
