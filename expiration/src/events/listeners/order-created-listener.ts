@@ -15,8 +15,11 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
   queueGroupName = QUEUE_GROUP_NAME;
   //what to do when receive the message, here is the connection with nats
   async onMessage(data: OrderCreatedEvent["data"], msg: Message) {
+    //get delay from expiresAt
+    const delay = new Date(data.expiresAt).getTime() - new Date().getTime();
+    console.log("Waitng for:", delay, " millisecunds");
     //create new job
-    await expirationQueue.add({ orderId: data.id });
+    await expirationQueue.add({ orderId: data.id }, { delay: delay });
     //ack the message
     msg.ack();
   }
