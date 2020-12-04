@@ -1,5 +1,5 @@
 import { natsWrapper } from "./nats-wrapper";
-
+import { OrderCreatedListener } from "./events/listeners/order-created-listener";
 const start = async () => {
   //check if env variable is defined
 
@@ -37,6 +37,9 @@ const start = async () => {
     //DOESN't WORK ON WINDOWS
     process.on("SIGINT", () => natsWrapper.client.close());
     process.on("SIGTERM", () => natsWrapper.client.close());
+
+    //wire up the listener
+    await new OrderCreatedListener(natsWrapper.client).listen();
   } catch (error) {
     console.error(error);
   }
