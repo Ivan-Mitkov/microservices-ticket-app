@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 import { app } from "./app";
 
 import { natsWrapper } from "./nats-wrapper";
-
+import { OrderCancelledListener } from "./events/listeners/order-cancelled-listener";
+import { OrderCreatedListener } from "./events/listeners/order-created-listener";
 const start = async () => {
   //check if env variable is defined
   if (!process.env.jwt) {
@@ -46,7 +47,8 @@ const start = async () => {
     process.on("SIGINT", () => natsWrapper.client.close());
     process.on("SIGTERM", () => natsWrapper.client.close());
     //CONNECT LISTENERS
-
+    new OrderCreatedListener(natsWrapper.client).listen();
+    new OrderCancelledListener(natsWrapper.client).listen();
     //mongodb://[service]:[port]/[name of db mongo wiil create if not existing ]
 
     await mongoose.connect(process.env.MONGO_URI, {
