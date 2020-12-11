@@ -16,3 +16,11 @@ orders-mongo-depl-786c66f857-hc52r
 2. kubectl exec -it orders-mongo-depl-786c66f857-hc52r mongo
 
 now we have mongo shell
+
+## Stripe secrets
+
+kubectl create secret generic stripe-secret --from-literal STRIPE_KEY=[Secret_key]
+
+##### the name of the secret is stripe-secret the same name in depl file
+
+##### the name of the key is STRIPE_KEY the same key in depl file
