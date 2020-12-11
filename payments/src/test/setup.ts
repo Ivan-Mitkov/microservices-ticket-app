@@ -7,7 +7,7 @@ import { app } from "../app";
 declare global {
   namespace NodeJS {
     interface Global {
-      signin(): string[];
+      signin(id?: string): string[];
     }
   }
 }
@@ -46,10 +46,10 @@ afterAll(async () => {
 
 //Define global function for getting authenticated user
 //works only in tests
-global.signin = () => {
+global.signin = (id?: string) => {
   //Build a jwt payload {id,email}
   const payload = {
-    id: new mongoose.Types.ObjectId().toHexString(),
+    id: id || new mongoose.Types.ObjectId().toHexString(),
     email: "test@test.com",
   };
   //create jwt
