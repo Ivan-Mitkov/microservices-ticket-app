@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@microauth/common": "^1.0.13",
     "@types/node": "^14.14.10",
     "node-nats-streaming": "^0.3.2",
     "ts-node-dev": "^1.0.0",
