@@ -18,9 +18,9 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
     //get delay from expiresAt
     const delay = new Date(data.expiresAt).getTime() - new Date().getTime();
     const testDelay = 12000;
-    console.log("Waitng for:", testDelay, " millisecunds");
+    console.log("Waitng for:", delay, " millisecunds");
     //create new job
-    await expirationQueue.add({ orderId: data.id }, { delay: testDelay });
+    await expirationQueue.add({ orderId: data.id }, { delay: delay });
     //ack the message
     msg.ack();
   }
