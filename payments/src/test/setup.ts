@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import request from "supertest";
 import { app } from "../app";
-
+import dotenv from "dotenv";
 declare global {
   namespace NodeJS {
     interface Global {
@@ -14,7 +14,11 @@ declare global {
 
 //mocks and real file with same path from this module
 jest.mock("../nats-wrapper");
-jest.mock("../stripe");
+//for mocked stripe only
+// jest.mock("../stripe");
+dotenv.config();
+console.log(process.env.STRIPE_KEY);
+
 let mongo: any;
 //before test start create new instance of memory server
 beforeAll(async () => {

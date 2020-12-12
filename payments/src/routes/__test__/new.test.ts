@@ -3,7 +3,7 @@ import { app } from "../../app";
 import mongoose from "mongoose";
 import { Order, OrderStatus } from "../../models/Orders";
 import { stripe } from "../../stripe";
-jest.mock("../../__mocks__/stripe.ts");
+// jest.mock("../../__mocks__/stripe.ts");
 
 it("should return 404 when purchasing an order that does not exists", async () => {
   await request(app)
@@ -60,17 +60,49 @@ it("should return 400 when purchasing a cancelled order", async () => {
     .expect(400);
 });
 
+// it("should return 204 with valid inputs", async () => {
+//   //create real order
+//   const id = mongoose.Types.ObjectId().toHexString();
+//   const userId = mongoose.Types.ObjectId().toHexString();
+
+//   const order = Order.build({
+//     id,
+//     status: OrderStatus.Created,
+//     version: 0,
+//     userId,
+//     price: 23,
+//   });
+//   await order.save();
+
+//   await request(app)
+//     .post("/api/payments")
+//     .set("Cookie", global.signin(userId))
+//     .send({
+//       //token for test mode
+//       token: "tok_visa",
+//       orderId: order.id,
+//     })
+//     .expect(201);
+
+//   const chargedOptions = (stripe.charges.create as jest.Mock).mock.calls[0][0];
+//   // console.log(chargedOptions);
+//   expect(chargedOptions.source).toEqual("tok_visa");
+//   expect(chargedOptions.amount).toEqual(order.price * 100);
+//   expect(chargedOptions.currency).toEqual("bgn");
+// });
+
+//REalistic test with stripe
 it("should return 204 with valid inputs", async () => {
   //create real order
   const id = mongoose.Types.ObjectId().toHexString();
   const userId = mongoose.Types.ObjectId().toHexString();
-
+  const price = Math.floor(Math.random() * 1000);
   const order = Order.build({
     id,
     status: OrderStatus.Created,
     version: 0,
     userId,
-    price: 23,
+    price,
   });
   await order.save();
 
@@ -83,10 +115,11 @@ it("should return 204 with valid inputs", async () => {
       orderId: order.id,
     })
     .expect(201);
-
-  const chargedOptions = (stripe.charges.create as jest.Mock).mock.calls[0][0];
-  // console.log(chargedOptions);
-  expect(chargedOptions.source).toEqual("tok_visa");
-  expect(chargedOptions.amount).toEqual(order.price * 100);
-  expect(chargedOptions.currency).toEqual("bgn");
+  const stripeCharges = await stripe.charges.list({ limit: 30 });
+  const stripeCharge = stripeCharges.data.find(
+    (charge) => charge.amount === price * 100
+  );
+  expect(stripeCharge).toBeDefined();
+  expect(stripeCharge?.currency).toEqual("bgn");
+  //https://stripe.com/docs/api/charges/list?lang=node
 });
