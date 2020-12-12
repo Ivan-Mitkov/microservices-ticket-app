@@ -10,6 +10,7 @@ import {
 } from "@microauth/common";
 import { stripe } from "../stripe";
 import { Order } from "../models/Orders";
+import { Payment } from "../models/Payment";
 
 const router = express.Router();
 router.post(
@@ -33,12 +34,13 @@ router.post(
       throw new BadRequestError("Order is already cancelled");
     }
     //https://stripe.com/docs/api/charges/create?lang=node
-    await stripe.charges.create({
+    const charge = await stripe.charges.create({
       currency: "bgn",
       amount: order.price * 100,
       source: token,
     });
-
+    const payment = Payment.build({ orderId, stripeId: charge.id });
+    await payment.save();
     res.status(201).send({ success: "true" });
   }
 );

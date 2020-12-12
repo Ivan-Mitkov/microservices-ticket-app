@@ -17,7 +17,7 @@ jest.mock("../nats-wrapper");
 //for mocked stripe only
 // jest.mock("../stripe");
 dotenv.config();
-console.log(process.env.STRIPE_KEY);
+// console.log(process.env.STRIPE_KEY);
 
 let mongo: any;
 //before test start create new instance of memory server

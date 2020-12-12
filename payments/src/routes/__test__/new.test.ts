@@ -2,6 +2,7 @@ import request from "supertest";
 import { app } from "../../app";
 import mongoose from "mongoose";
 import { Order, OrderStatus } from "../../models/Orders";
+import { Payment } from "../../models/Payment";
 import { stripe } from "../../stripe";
 // jest.mock("../../__mocks__/stripe.ts");
 
@@ -92,7 +93,7 @@ it("should return 400 when purchasing a cancelled order", async () => {
 // });
 
 //REalistic test with stripe
-it("should return 204 with valid inputs", async () => {
+it("should return 201 with valid inputs", async () => {
   //create real order
   const id = mongoose.Types.ObjectId().toHexString();
   const userId = mongoose.Types.ObjectId().toHexString();
@@ -122,4 +123,12 @@ it("should return 204 with valid inputs", async () => {
   expect(stripeCharge).toBeDefined();
   expect(stripeCharge?.currency).toEqual("bgn");
   //https://stripe.com/docs/api/charges/list?lang=node
+
+  //test payment
+  const payment = await Payment.findOne({
+    orderId: order.id,
+    stripeId: stripeCharge?.id,
+  });
+
+  expect(payment).not.toBeNull();
 });
