@@ -14,6 +14,7 @@ declare global {
 
 //mocks and real file with same path from this module
 jest.mock("../nats-wrapper");
+jest.mock("../stripe");
 let mongo: any;
 //before test start create new instance of memory server
 beforeAll(async () => {
