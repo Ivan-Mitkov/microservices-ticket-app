@@ -1,13 +1,19 @@
 import React, { useState } from "react";
+import Router from "next/router";
+import useRequest from "../../hooks/use-request";
 
 const NewTicket = () => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
+  const { doRequest, errors } = useRequest({
+    url: "/api/tickets",
+    method: "post",
+    body: { title, price },
+    onSuccess: () => Router.push("/"),
+  });
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submit");
-    setPrice("");
-    setTitle("");
+    doRequest();
   };
   const sanitizeInput = () => {
     const value = parseFloat(price);
@@ -42,6 +48,7 @@ const NewTicket = () => {
             className="form-control"
           />
         </div>
+        {errors}
         <button className="btn btn-primary">Submit</button>
       </form>
     </div>

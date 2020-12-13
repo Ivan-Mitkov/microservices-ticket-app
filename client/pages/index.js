@@ -1,9 +1,8 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import buildClient from "../api/build-client";
 
-const Home = ({ currentUser }) => {
-  console.log(currentUser);
+const Home = ({ currentUser,tickets }) => {
+  console.log(tickets);
   return (
     <div className={styles.container}>
       <Head>
@@ -25,8 +24,7 @@ const Home = ({ currentUser }) => {
 };
 //invoked from _app.js
 Home.getInitialProps = async (context, client, currentUser) => {
-  // const { data } = await buildClient(context).get("/api/users/currentuser");
-  // console.log("Get initial props home page");
-  return {};
+  const { data } = await client.get("/api/tickets");
+  return { tickets: data };
 };
 export default Home;
