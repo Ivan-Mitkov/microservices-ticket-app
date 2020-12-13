@@ -3,6 +3,7 @@ import styles from "../styles/Home.module.css";
 import buildClient from "../api/build-client";
 
 const Home = ({ currentUser }) => {
+  console.log(currentUser);
   return (
     <div className={styles.container}>
       <Head>
@@ -23,9 +24,9 @@ const Home = ({ currentUser }) => {
   );
 };
 //invoked from _app.js
-Home.getInitialProps = async (context) => {
-  const { data } = await buildClient(context).get("/api/users/currentuser");
+Home.getInitialProps = async (context, client, currentUser) => {
+  // const { data } = await buildClient(context).get("/api/users/currentuser");
   // console.log("Get initial props home page");
-  return data;
+  return {};
 };
 export default Home;

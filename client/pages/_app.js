@@ -6,21 +6,24 @@ function MyApp({ Component, pageProps, currentUser }) {
   return (
     <>
       <Header currentUser={currentUser} />
-      <Component {...pageProps} />
+      <Component currentUser={currentUser} {...pageProps} />
     </>
   );
 }
 //If getInitialProps in _app the same function in other pages is not automaticaly invoked
 MyApp.getInitialProps = async (appContext) => {
   // console.log("context: ", context);
-  const { data } = await buildClient(appContext.ctx).get(
-    "/api/users/currentuser"
-  );
+  const client = buildClient(appContext.ctx);
+  const { data } = await client.get("/api/users/currentuser");
   //manualy invoke getInitialProps in Components for individual pages
   let pageProps = {};
   //if there is getInitialProps in pages
   if (appContext.Component.getInitialProps) {
-    pageProps = await appContext.Component.getInitialProps(appContext.ctx);
+    pageProps = await appContext.Component.getInitialProps(
+      appContext.ctx,
+      client,
+      data.currentUser
+    );
   }
   return {
     pageProps,
