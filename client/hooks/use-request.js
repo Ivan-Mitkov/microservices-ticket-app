@@ -12,15 +12,19 @@ const useRequest = ({ url, method, body, onSuccess }) => {
       }
       return response.data;
     } catch (error) {
-      setErrors(
-        <div className="alert alert-danger">
-          <ul className="my-0">
-            {error.response.data.map((err, i) => {
-              return <li key={i}> {err.message}</li>;
-            })}
-          </ul>
-        </div>
-      );
+      if (Array.isArray(error.response.data)) {
+        setErrors(
+          <div className="alert alert-danger">
+            <ul className="my-0">
+              {error.response.data.map((err, i) => {
+                return <li key={i}> {err.message}</li>;
+              })}
+            </ul>
+          </div>
+        );
+      } else {
+        setErrors(error.message);
+      }
     }
   };
   return { doRequest, errors };
