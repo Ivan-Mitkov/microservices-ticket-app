@@ -1,11 +1,12 @@
 # This is a basic workflow to help you get started with Actions
 
-name: tests
+name: tests-tickets
 
 # Controls when the action will run. 
 on: 
-  pull_request   
-
+  pull_request:
+    paths:
+      - 'tickets/**'  
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -19,6 +20,4 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
      
-      - run: cd auth && yarn && yarn run test:ci
-
-     
+      - run: cd tickets && yarn && yarn run test:ci
