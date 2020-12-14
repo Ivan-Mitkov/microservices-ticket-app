@@ -2,8 +2,8 @@ import request from "supertest";
 import { app } from "../../app";
 import mongoose from "mongoose";
 import { Order, OrderStatus } from "../../models/Orders";
-import { Payment } from "../../models/Payment";
-import { stripe } from "../../stripe";
+// import { Payment } from "../../models/Payment";
+// import { stripe } from "../../stripe";
 // jest.mock("../../__mocks__/stripe.ts");
 
 it("should return 404 when purchasing an order that does not exists", async () => {
