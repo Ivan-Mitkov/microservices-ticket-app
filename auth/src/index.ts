@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { app } from "./app";
 
 const start = async () => {
-  console.log("Starting Up...");
+  console.log("Starting Up.");
   //check if env variable is defined
   if (!process.env.jwt) {
     throw new Error("ENV Variable Not Found");
