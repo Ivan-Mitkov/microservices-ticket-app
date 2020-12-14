@@ -6,7 +6,7 @@ name: tests-auth
 on: 
   pull_request:
     paths:
-      - 'auth/**'   
+    - 'auth/**'   
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
