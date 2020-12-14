@@ -93,6 +93,7 @@ it("should return 400 when purchasing a cancelled order", async () => {
 // });
 
 //REalistic test with stripe
+
 it("should return 201 with valid inputs", async () => {
   //create real order
   const id = mongoose.Types.ObjectId().toHexString();
@@ -120,6 +121,7 @@ it("should return 201 with valid inputs", async () => {
   const stripeCharge = stripeCharges.data.find(
     (charge) => charge.amount === price * 100
   );
+  //the env is not working with test
   expect(stripeCharge).toBeDefined();
   expect(stripeCharge?.currency).toEqual("bgn");
   //https://stripe.com/docs/api/charges/list?lang=node
