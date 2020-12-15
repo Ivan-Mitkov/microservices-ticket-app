@@ -7,7 +7,7 @@ import { ExpirationCompleteListener } from "./events/listeners/expiration-comple
 import { PaymentCreatedListener } from "./events/listeners/payment-created-listener";
 
 const start = async () => {
-  console.log("Starting order service..");
+  console.log("Starting order service....");
   //check if env variable is defined
   if (!process.env.jwt) {
     throw new Error("ENV Variable Not Found");
