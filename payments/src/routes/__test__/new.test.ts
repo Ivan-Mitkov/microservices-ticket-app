@@ -2,8 +2,8 @@ import request from "supertest";
 import { app } from "../../app";
 import mongoose from "mongoose";
 import { Order, OrderStatus } from "../../models/Orders";
-import { Payment } from "../../models/Payment";
-import { stripe } from "../../stripe";
+// import { Payment } from "../../models/Payment";
+// import { stripe } from "../../stripe";
 // jest.mock("../../__mocks__/stripe.ts");
 
 it("should return 404 when purchasing an order that does not exists", async () => {
@@ -93,42 +93,44 @@ it("should return 400 when purchasing a cancelled order", async () => {
 // });
 
 //REalistic test with stripe
-it("should return 201 with valid inputs", async () => {
-  //create real order
-  const id = mongoose.Types.ObjectId().toHexString();
-  const userId = mongoose.Types.ObjectId().toHexString();
-  const price = Math.floor(Math.random() * 1000);
-  const order = Order.build({
-    id,
-    status: OrderStatus.Created,
-    version: 0,
-    userId,
-    price,
-  });
-  await order.save();
 
-  await request(app)
-    .post("/api/payments")
-    .set("Cookie", global.signin(userId))
-    .send({
-      //token for test mode
-      token: "tok_visa",
-      orderId: order.id,
-    })
-    .expect(201);
-  const stripeCharges = await stripe.charges.list({ limit: 30 });
-  const stripeCharge = stripeCharges.data.find(
-    (charge) => charge.amount === price * 100
-  );
-  expect(stripeCharge).toBeDefined();
-  expect(stripeCharge?.currency).toEqual("bgn");
-  //https://stripe.com/docs/api/charges/list?lang=node
+// it("should return 201 with valid inputs", async () => {
+//   //create real order
+//   const id = mongoose.Types.ObjectId().toHexString();
+//   const userId = mongoose.Types.ObjectId().toHexString();
+//   const price = Math.floor(Math.random() * 1000);
+//   const order = Order.build({
+//     id,
+//     status: OrderStatus.Created,
+//     version: 0,
+//     userId,
+//     price,
+//   });
+//   await order.save();
 
-  //test payment
-  const payment = await Payment.findOne({
-    orderId: order.id,
-    stripeId: stripeCharge?.id,
-  });
+//   await request(app)
+//     .post("/api/payments")
+//     .set("Cookie", global.signin(userId))
+//     .send({
+//       //token for test mode
+//       token: "tok_visa",
+//       orderId: order.id,
+//     })
+//     .expect(201);
+//   const stripeCharges = await stripe.charges.list({ limit: 30 });
+//   const stripeCharge = stripeCharges.data.find(
+//     (charge) => charge.amount === price * 100
+//   );
 
-  expect(payment).not.toBeNull();
-});
+//   expect(stripeCharge).toBeDefined();
+//   expect(stripeCharge?.currency).toEqual("bgn");
+//   //https://stripe.com/docs/api/charges/list?lang=node
+
+//   //test payment
+//   const payment = await Payment.findOne({
+//     orderId: order.id,
+//     stripeId: stripeCharge?.id,
+//   });
+
+//   expect(payment).not.toBeNull();
+// });
