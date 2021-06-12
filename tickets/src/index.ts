@@ -5,7 +5,7 @@ import { OrderCreatedListener } from "./events/listeners/order-created-listener"
 import { natsWrapper } from "./nats-wrapper";
 
 const start = async () => {
-  console.log("Starting tickets service");
+  console.log("Starting tickets service.");
   //check if env variable is defined
   if (!process.env.jwt) {
     throw new Error("ENV Variable Not Found");
