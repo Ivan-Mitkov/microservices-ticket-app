@@ -6,7 +6,7 @@ import { OrderCancelledListener } from "./events/listeners/order-cancelled-liste
 import { OrderCreatedListener } from "./events/listeners/order-created-listener";
 const start = async () => {
   //check if env variable is defined
-  console.log('Starting payment service.' )
+  console.log('Starting payment service..' )
   if (!process.env.jwt) {
     throw new Error("ENV Variable Not Found");
   }
