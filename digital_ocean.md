@@ -45,7 +45,7 @@ kubectl create secret generic stripe-secret --from-literal=[key in this keys STR
 
 https://kubernetes.github.io/ingress-nginx/deploy/#digital-ocean
 
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.41.2/deploy/static/provider/do/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.47.0/deploy/static/provider/do/deploy.yaml
 
 #### manualy commit and push to master /fot infra folder/
 

@@ -2,7 +2,7 @@ import { natsWrapper } from "./nats-wrapper";
 import { OrderCreatedListener } from "./events/listeners/order-created-listener";
 const start = async () => {
   //check if env variable is defined
-  console.log('Expiration service started')
+  console.log('Expiration service started.')
   if (!process.env.NATS_URL) {
     throw new Error("ENV Variable Not Found");
   }
