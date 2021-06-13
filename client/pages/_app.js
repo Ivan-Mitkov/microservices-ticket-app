@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import buildClient from "../api/build-client";
 import Header from "../components/header";
 function MyApp({ Component, pageProps, currentUser }) {
-  console.log(currentUser,"!");
+  console.log(currentUser);
   return (
     <>
       <Header currentUser={currentUser} />
