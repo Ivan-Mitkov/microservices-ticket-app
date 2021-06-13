@@ -18,8 +18,8 @@ const Order = ({ orders }) => {
             } else {
               return (
                 <Link href={`/orders/${order.id}`}>
-                  <a>
-                    <li key={order.id} className="list-group-item">
+                  <a key={order.id}>
+                    <li className="list-group-item">
                       <div>Ticket: {order.ticket.title}</div>
                       <div>Status: {order.status}</div>
                     </li>
