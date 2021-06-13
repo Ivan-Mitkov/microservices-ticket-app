@@ -6,56 +6,56 @@ build:
   local:
     push: false
   artifacts:
-  - image: ivanmitkov/auth
-    context: auth
-    docker:
-      dockerfile: Dockerfile
-    sync:
-      manual:
-        - src: 'src/**/*.ts'
-          dest: .
-  - image: ivanmitkov/tickets
-    context: tickets
-    docker:
-      dockerfile: Dockerfile
-    sync:
-      manual:
-        - src: 'src/**/*.ts'
-          dest: .
-  - image: ivanmitkov/orders
-    context: orders
-    docker:
-      dockerfile: Dockerfile
-    sync:
-      manual:
-        - src: 'src/**/*.ts'
-          dest: .
-  - image: ivanmitkov/expiration
-    context: expiration
-    docker:
-      dockerfile: Dockerfile
-    sync:
-      manual:
-        - src: 'src/**/*.ts'
-          dest: .
-  - image: ivanmitkov/payments
-    context: payments
-    docker:
-      dockerfile: Dockerfile
-    sync:
-      manual:
-        - src: 'src/**/*.ts'
-          dest: .
-  - image: ivanmitkov/client
-    context: client
-    docker:
-      dockerfile: Dockerfile
-    sync:
-      manual:
-        - src: '**/*.js'
-          dest: .
+    - image: ivanmitkov/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: ivanmitkov/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: ivanmitkov/orders
+      context: orders
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: ivanmitkov/expiration
+      context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: ivanmitkov/payments
+      context: payments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: ivanmitkov/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
 deploy:
   kubectl:
     manifests:
-    -  ./infra/k8s/*
-    -  ./infra/k8s-dev/*
+      - ./infra/k8s/*
+      - ./infra/k8s-dev/*
