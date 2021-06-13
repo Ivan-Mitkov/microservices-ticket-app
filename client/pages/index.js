@@ -25,7 +25,7 @@ const Home = ({ currentUser, tickets }) => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Ticketing</h1>
+        <h1 className={styles.title}>Buy Tickets</h1>
         <table className="table table-striped table-success mt-5 ">
           <thead>
             <tr>
