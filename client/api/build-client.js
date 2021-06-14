@@ -6,16 +6,24 @@ const buildClient = ({ req }) => {
     //   baseURL: "http://ingress-nginx.ingress-nginx.svc.cluster.local",
     //   headers: req.headers,
     // });
-    const baseAxios = axios.create({
-      baseURL: "http://www.microservices-ticketing.space",
-      headers: req.headers,
-    });
-    return baseAxios;
+    try {
+      const baseAxios = axios.create({
+        baseURL: "http://www.microservices-ticketing.space",
+        headers: req.headers,
+      });
+      return baseAxios;
+    } catch (error) {
+      console.log(error.message);
+    }
   } else {
-    const baseAxios = axios.create({
-      baseURL: "/",
-    });
-    return baseAxios;
+    try {
+      const baseAxios = axios.create({
+        baseURL: "/",
+      });
+      return baseAxios;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 };
 
